@@ -6,6 +6,8 @@ package cabanas.cabanas.Web;
 
 import cabanas.cabanas.Modelo.Reservacion;
 import cabanas.cabanas.Servicios.ServiciosReservacion;
+import cabanas.cabanas.reportes.ContadorClientes;
+import cabanas.cabanas.reportes.StatusReservas;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +57,20 @@ public class ReservacionWeb {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete(@PathVariable("id") int reservationId) {
         return servicio.deleteReservation(reservationId);
+    }
+     @GetMapping("/report-status")
+    public StatusReservas getReservas(){
+        return servicio.getReporteStatusReservaciones();
+    }
+    
+    @GetMapping("/report-dates/{dateOne}/{dateTwo}")
+    public List<Reservacion> getReservasTiempo (@PathVariable("dateOne")String dateOne, @PathVariable("dateTwo")String dateTwo){
+        return servicio.getReportesTiempoReservaciones(dateOne, dateTwo);
+    }
+    
+    @GetMapping("/report-clients")
+    public List<ContadorClientes> getClientes(){
+        return servicio.servicioTopClientes();
+    
     }
 }
